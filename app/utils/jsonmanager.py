@@ -25,13 +25,16 @@ class JSONManager:
             print(f"Yazma hatası: {e}")
             return False
 
+    def get_all(self) -> list:
+        """Public method to retrieve all records."""
+        return self._read_all()
+
     def get_next_id(self) -> int:
         data = self._read_all()
         return max([item['id'] for item in data], default=0) + 1
 
     def save(self, task_dict: dict) -> bool:
         data = self._read_all()
-        # Varsa güncelle, yoksa ekle (Upsert mantığı)
         existing_index = next((i for i, t in enumerate(data) if t['id'] == task_dict['id']), None)
         
         if existing_index is not None:
@@ -42,19 +45,11 @@ class JSONManager:
         return self._write_all(data)
     
     def delete(self, search_key: str, search_value) -> bool:
-        """Kayıt siler ve dosyayı günceller."""
         data = self._read_all()
         initial_count = len(data)
         
-        # Eşleşmeyenleri tut, eşleşeni listeden at
         data = [item for item in data if item.get(search_key) != search_value]
         
         if len(data) < initial_count:
             return self._write_all(data)
         return False
-    
-if __name__ == '__main__':
-    db = JSONManager("data_store.json")
-    #db.create({"uid": 101, "product": "Laptop", "stock": 5})
-    #db.update("uid", 101, {"stock": 4})
-    db.delete("uid", 101)
