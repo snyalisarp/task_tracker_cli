@@ -29,7 +29,7 @@ class Task:
         if not isinstance(self.task_status, TaskStatus):
             raise ValueError("Task status value should be one of them: ",
                              list(TaskStatus))
-        if self.task_description.strip() is '':
+        if self.task_description.strip() == '':
             raise ValueError("Task must have a description")
         
     def update_status(self, new_status: TaskStatus):
