@@ -33,7 +33,6 @@ class Task:
             raise ValueError("Task must have a description")
         
     def update_status(self, new_status: TaskStatus):
-        """Durum güncellenirken updatedAt alanını da günceller."""
         self.task_status = new_status
         self.updated_at = (datetime
                           .now()
@@ -53,7 +52,6 @@ class Task:
     
     @classmethod
     def from_dict(cls, data: dict):
-        """Sözlük verisinden nesne örneği oluşturur."""
         return cls(
             task_id=data['id'],
             task_description=data['description'],
@@ -61,12 +59,3 @@ class Task:
             created_at=data['createdAt'],
             updated_at=data['updatedAt']
         )
-
-
-# if __name__ == '__main__':
-#     task1 = Task(task_id=1, 
-#                  task_description="test", 
-#                  task_status=TaskStatus.DONE)
-#     print(task1.to_dict())
-#     print(str(TaskStatus.DONE.value))
-#     test_dict = {"tasks"}

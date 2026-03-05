@@ -22,11 +22,10 @@ class JSONManager:
             self.file_path.write_text(content, encoding='utf-8')
             return True
         except Exception as e:
-            print(f"Yazma hatası: {e}")
+            print(f"Writing Error: {e}")
             return False
 
     def get_all(self) -> list:
-        """Public method to retrieve all records."""
         return self._read_all()
 
     def get_next_id(self) -> int:

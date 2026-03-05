@@ -5,25 +5,22 @@ from app.services.taskservice import TaskService
 def main():
     service = TaskService()
     parser = argparse.ArgumentParser(description="Task Tracker CLI")
-    subparsers = parser.add_subparsers(dest="command", help="Komutlar")
+    subparsers = parser.add_subparsers(dest="command", help="Commands")
 
-    # Ekleme Komutu: add "Görev açıklaması"
-    add_parser = subparsers.add_parser("add", help="Yeni görev ekler")
+    add_parser = subparsers.add_parser("add", help="Adds new task")
     add_parser.add_argument("description", type=str, help="Görev açıklaması")
 
-    # Güncelleme Komutu: update 1 "done"
-    update_parser = subparsers.add_parser("update", help="Görev durumunu günceller")
+    update_parser = subparsers.add_parser("update", help="Updates task status")
     update_parser.add_argument("id", type=int, help="Task ID")
     update_parser.add_argument("status", type=str, choices=[s.value for s in TaskStatus], 
-                               help="Yeni durum (todo, in-progress, done)")
+                               help="New status (todo, in-progress, done)")
 
-    # Listeleme Komutu: list --status "todo"
     list_parser = subparsers.add_parser("list", help="Görevleri listeler")
     list_parser.add_argument("--status", type=str, choices=[s.value for s in TaskStatus], 
-                             help="Duruma göre filtrele")
+                             help="Filter tasks by their status")
 
-    # Silme Komutu: delete 1
-    delete_parser = subparsers.add_parser("delete", help="Görevi siler")
+
+    delete_parser = subparsers.add_parser("delete", help="Deletes task by given ID")
     delete_parser.add_argument("id", type=int, help="Task ID")
 
     args = parser.parse_args()
